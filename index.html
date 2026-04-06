@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Resume Maker Online  — Build stunning professional resumes and download them as PDF instantly." />
+  <title>Resume Maker — Build &amp; Download Professional Resumes beta 1.0</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" defer></script>
+  <!-- PDF.js for resume PDF parsing -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <!-- Mammoth.js for DOCX parsing -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+</head>
+
+<body>
+
+  <!-- ══════════ Navbar ══════════ -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <a href="#" class="navbar-logo" onclick="showPage('home')">Resume<span>Maker</span></a>
+      <div class="navbar-links">
+        <a href="#" class="active" id="nav-home" onclick="showPage('home')">Home</a>
+        <a href="#" id="nav-editor" onclick="showPage('editor')">Templates</a>
+        <a href="#" id="nav-resumes" onclick="showPage('resumes')">My Resumes</a>
+        <a href="#" id="nav-ats" onclick="showPage('ats')">⚡ ATS Check</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ══════════ PAGE: Home ══════════ -->
+  <section id="page-home" class="page active">
+
+    <!-- Hero -->
+    <div class="hero hero-slim">
+      <div class="hero-content">
+        <div class="hero-badge"><span class="dot"></span> Free &amp; Open Source</div>
+        <h1>Build Your <span class="highlight">Perfect Resume</span></h1>
+        <p>Choose from stunning templates or start from scratch — no sign-up, completely free.</p>
+        <div class="hero-actions">
+          <button class="btn btn-secondary" onclick="showPage('resumes')">📂 My Resumes</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Templates Showcase -->
+    <div class="templates-section">
+      <div class="container">
+        <div class="templates-header">
+          <h2 class="section-title">Choose a Template</h2>
+          <p class="section-subtitle">Pick a design that fits your style and start editing instantly</p>
+        </div>
+
+        <div class="home-template-grid">
+
+          <div class="home-tpl-card" onclick="useTemplate('classic')">
+            <div class="home-tpl-img-wrap">
+              <img src="tpl_classic.png" alt="Classic resume template" class="home-tpl-img" />
+              <div class="home-tpl-overlay"><button class="btn btn-primary home-tpl-use-btn">Use Template</button></div>
+            </div>
+            <div class="home-tpl-info">
+              <span class="home-tpl-badge">Professional</span>
+              <h3>Classic</h3>
+              <p>Traditional and ATS-friendly. Ideal for corporate and finance roles.</p>
+            </div>
+          </div>
+
+          <div class="home-tpl-card featured" onclick="useTemplate('sidebar')">
+            <div class="home-tpl-featured-tag">⭐ Popular</div>
+            <div class="home-tpl-img-wrap">
+              <img src="tpl_sidebar.png" alt="Sidebar resume template" class="home-tpl-img" />
+              <div class="home-tpl-overlay"><button class="btn btn-primary home-tpl-use-btn">Use Template</button></div>
+            </div>
+            <div class="home-tpl-info">
+              <span class="home-tpl-badge">Modern</span>
+              <h3>Sidebar</h3>
+              <p>Two-column layout with dark sidebar. Great for tech and design roles.</p>
+            </div>
+          </div>
+
+          <div class="home-tpl-card" onclick="useTemplate('minimal')">
+            <div class="home-tpl-img-wrap">
+              <img src="tpl_minimal.png" alt="Minimal resume template" class="home-tpl-img" />
+              <div class="home-tpl-overlay"><button class="btn btn-primary home-tpl-use-btn">Use Template</button></div>
+            </div>
+            <div class="home-tpl-info">
+              <span class="home-tpl-badge">Clean</span>
+              <h3>Minimal</h3>
+              <p>Less is more — sophisticated whitespace for a refined impression.</p>
+            </div>
+          </div>
+
+          <div class="home-tpl-card" onclick="useTemplate('bold')">
+            <div class="home-tpl-img-wrap">
+              <img src="tpl_bold.png" alt="Bold resume template" class="home-tpl-img" />
+              <div class="home-tpl-overlay"><button class="btn btn-primary home-tpl-use-btn">Use Template</button></div>
+            </div>
+            <div class="home-tpl-info">
+              <span class="home-tpl-badge">Impact</span>
+              <h3>Bold</h3>
+              <p>High-contrast layout that commands attention immediately.</p>
+            </div>
+          </div>
+
+          <div class="home-tpl-card" onclick="useTemplate('elegant')">
+            <div class="home-tpl-img-wrap">
+              <img src="tpl_elegant.png" alt="Elegant resume template" class="home-tpl-img" />
+              <div class="home-tpl-overlay"><button class="btn btn-primary home-tpl-use-btn">Use Template</button></div>
+            </div>
+            <div class="home-tpl-info">
+              <span class="home-tpl-badge">Stylish</span>
+              <h3>Elegant</h3>
+              <p>Refined accent lines and delicate typography for creative industries.</p>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Create Your Own CTA -->
+        <div class="create-own-cta">
+          <div class="create-own-inner">
+            <div class="create-own-icon">✏️</div>
+            <div class="create-own-text">
+              <h3>Create Your Own Template</h3>
+              <p>Start from a blank canvas and build a fully custom resume your way.</p>
+            </div>
+            <button class="btn btn-primary create-own-btn" onclick="showPage('editor')">Start Building →</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Features -->
+    <div class="features">
+      <div class="container">
+        <h2 class="section-title" style="text-align:center;">Why Resume Maker?</h2>
+        <p class="section-subtitle" style="text-align:center;">Everything you need to land your dream job</p>
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <h3>Lightning Fast</h3>
+            <p>Build your resume in minutes with our intuitive editor. No sign-up required.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">👁️</div>
+            <h3>Live Preview</h3>
+            <p>See your resume update in real-time as you type. What you see is what you get.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">📄</div>
+            <h3>PDF Download</h3>
+            <p>Download a pixel-perfect PDF of your resume ready to send to employers.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">💾</div>
+            <h3>Save & Load</h3>
+            <p>Save your resumes to the server and come back anytime to edit or download them.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🎨</div>
+            <h3>5 Templates</h3>
+            <p>Choose from five unique designs — from classic and minimal to bold and elegant.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">📱</div>
+            <h3>Fully Responsive</h3>
+            <p>Works beautifully on desktop, tablet, and mobile. Edit your resume anywhere.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>Built by AM <span class="brand">ResumeMaker</span> — Powered by Node.js</p>
+    </footer>
+  </section>
+
+  <!-- ══════════ PAGE: Editor ══════════ -->
+  <section id="page-editor" class="page">
+    <div class="app-page">
+      <div class="app-layout">
+
+        <!-- Editor Panel -->
+        <div class="editor-panel" id="editor-panel">
+
+
+          <!-- Template Picker -->
+          <div class="editor-section">
+            <div class="editor-section-header">
+              <h3><span class="icon">🎨</span> Choose Template</h3>
+            </div>
+            <div class="template-picker" id="template-picker">
+              <div class="template-card active" data-template="classic" onclick="selectTemplate('classic')">
+                <div class="template-thumb tpl-thumb-classic">
+                  <div class="tt-header"></div>
+                  <div class="tt-line w80"></div>
+                  <div class="tt-line w60"></div>
+                  <div class="tt-line w90"></div>
+                  <div class="tt-line w70"></div>
+                </div>
+                <span>Classic</span>
+              </div>
+              <div class="template-card" data-template="sidebar" onclick="selectTemplate('sidebar')">
+                <div class="template-thumb tpl-thumb-sidebar">
+                  <div class="tt-sidebar">
+                    <div class="tt-line w80"></div>
+                    <div class="tt-line w60"></div>
+                  </div>
+                  <div class="tt-main">
+                    <div class="tt-line w90"></div>
+                    <div class="tt-line w70"></div>
+                    <div class="tt-line w80"></div>
+                  </div>
+                </div>
+                <span>Sidebar</span>
+              </div>
+              <div class="template-card" data-template="minimal" onclick="selectTemplate('minimal')">
+                <div class="template-thumb tpl-thumb-minimal">
+                  <div class="tt-header-thin"></div>
+                  <div class="tt-line w90"></div>
+                  <div class="tt-line w60"></div>
+                  <div class="tt-line w80"></div>
+                  <div class="tt-line w50"></div>
+                </div>
+                <span>Minimal</span>
+              </div>
+              <div class="template-card" data-template="bold" onclick="selectTemplate('bold')">
+                <div class="template-thumb tpl-thumb-bold">
+                  <div class="tt-header-bold"></div>
+                  <div class="tt-line w70"></div>
+                  <div class="tt-line w90"></div>
+                  <div class="tt-line w60"></div>
+                </div>
+                <span>Bold</span>
+              </div>
+              <div class="template-card" data-template="elegant" onclick="selectTemplate('elegant')">
+                <div class="template-thumb tpl-thumb-elegant">
+                  <div class="tt-accent-line"></div>
+                  <div class="tt-line w80"></div>
+                  <div class="tt-line w60"></div>
+                  <div class="tt-line w90"></div>
+                  <div class="tt-line w70"></div>
+                </div>
+                <span>Elegant</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Personal Info -->
+          <div class="editor-section">
+            <div class="editor-section-header">
+              <h3><span class="icon">👤</span> Personal Information</h3>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Full Name</label>
+                <input type="text" id="inp-name" placeholder="John Doe" oninput="updatePreview()" />
+              </div>
+              <div class="form-group">
+                <label>Job Title</label>
+                <input type="text" id="inp-title" placeholder="Full-Stack Developer" oninput="updatePreview()" />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="inp-email" placeholder="john@example.com" oninput="updatePreview()" />
+              </div>
+              <div class="form-group">
+                <label>Phone</label>
+                <input type="tel" id="inp-phone" placeholder="+1 234 567 890" oninput="updatePreview()" />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Location</label>
+                <input type="text" id="inp-location" placeholder="New York, USA" oninput="updatePreview()" />
+              </div>
+              <div class="form-group">
+                <label>Website / LinkedIn</label>
+                <input type="url" id="inp-website" placeholder="https://linkedin.com/in/john"
+                  oninput="updatePreview()" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Summary -->
+          <div class="editor-section" id="section-summary">
+            <div class="editor-section-header">
+              <h3><span class="icon">📝</span> Professional Summary</h3>
+              <button class="btn btn-sm ss-trigger-btn" onclick="openSmartSuggest('inp-summary', document.getElementById('inp-title')?.value)" title="Get wording suggestions">✨ Suggest</button>
+            </div>
+            <div class="form-group">
+              <textarea id="inp-summary" rows="3"
+                placeholder="A brief summary of your professional background and goals..."
+                oninput="updatePreview()"></textarea>
+              <div id="summary-wordcount" class="wordcount-hint">0 words</div>
+            </div>
+          </div>
+
+          <!-- Experience -->
+          <div class="editor-section" id="section-experience">
+            <div class="editor-section-header">
+              <h3><span class="icon">💼</span> Experience</h3>
+              <button class="btn btn-sm btn-secondary" onclick="addEntry('experience')">+ Add</button>
+            </div>
+            <div id="experience-entries"></div>
+          </div>
+
+          <!-- Education -->
+          <div class="editor-section" id="section-education">
+            <div class="editor-section-header">
+              <h3><span class="icon">🎓</span> Education</h3>
+              <button class="btn btn-sm btn-secondary" onclick="addEntry('education')">+ Add</button>
+            </div>
+            <div id="education-entries"></div>
+          </div>
+
+          <!-- Skills -->
+          <div class="editor-section" id="section-skills">
+            <div class="editor-section-header">
+              <h3><span class="icon">🛠️</span> Skills</h3>
+            </div>
+
+            <!-- Selected Skills Tags -->
+            <div class="skills-selected-wrap">
+              <div class="skills-selected-tags" id="skills-selected-tags">
+                <span class="skills-empty-hint" id="skills-empty-hint">No skills added yet — pick from below or type
+                  your own</span>
+              </div>
+            </div>
+
+            <!-- Skill Search Box -->
+            <div class="skills-search-row">
+              <div class="skills-search-wrap">
+                <span class="skills-search-icon">🔍</span>
+                <input type="text" id="skills-search-input" class="skills-search-inp"
+                  placeholder="Search or type a skill (e.g. React, Leadership)…" oninput="onSkillSearch(event)"
+                  onkeydown="onSkillSearchKey(event)" autocomplete="off" />
+              </div>
+              <div class="skills-search-hint" id="skills-search-hint">Type to search +100 skills across all categories
+              </div>
+            </div>
+
+            <!-- Search Results / Suggestions -->
+            <div class="skills-chips-wrap" id="skills-chips-wrap">
+              <!-- populated by JS -->
+            </div>
+
+            <!-- Hidden input keeps comma-separated value for backward compat -->
+            <input type="hidden" id="inp-skills" />
+          </div>
+
+          <!-- Projects -->
+          <div class="editor-section" id="section-projects">
+            <div class="editor-section-header">
+              <h3><span class="icon">🚀</span> Projects</h3>
+              <button class="btn btn-sm btn-secondary" onclick="addEntry('projects')">+ Add</button>
+            </div>
+            <div id="projects-entries"></div>
+          </div>
+
+          <!-- Actions -->
+          <div style="display:flex; gap:10px; flex-wrap:wrap; padding: 24px 0;">
+            <button class="btn btn-primary" onclick="saveResume()">💾 Save Resume</button>
+            <button class="btn btn-secondary" onclick="showPage('preview')">👁️ Preview</button>
+            <button class="btn btn-secondary" onclick="exportResumeJSON()">⬇ Export JSON</button>
+            <label class="btn btn-secondary" style="cursor:pointer;">
+              ⬆ Import JSON
+              <input type="file" accept=".json" style="display:none" onchange="handleImportFile(event)" />
+            </label>
+            <button class="btn btn-danger" onclick="clearEditor()">🗑️ Clear All</button>
+          </div>
+        </div>
+
+        <!-- Preview Panel -->
+        <div class="preview-panel" id="preview-panel">
+          <div class="preview-toolbar">
+            <button class="btn btn-sm btn-primary" onclick="downloadPDF()">⬇ Download PDF</button>
+            <button class="btn btn-sm btn-secondary" onclick="saveResume()">💾 Save</button>
+          </div>
+          <div class="resume-paper" id="resume-paper">
+            <div class="empty-state" id="preview-empty">
+              <div class="icon">📄</div>
+              <p>Start filling in the editor to see your resume here</p>
+            </div>
+            <div id="resume-content" style="display:none;"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Mobile Tab Bar -->
+    <div class="mobile-tab-bar">
+      <button class="active" onclick="showMobileTab('editor')">✏️ Editor</button>
+      <button onclick="showMobileTab('preview')">👁️ Preview</button>
+    </div>
+  </section>
+
+  <!-- ══════════ PAGE: Full Preview ══════════ -->
+  <section id="page-preview" class="page">
+    <div class="app-page" style="display:flex; flex-direction:column; align-items:center; padding:100px 24px 48px;">
+      <div style="display:flex; gap:10px; margin-bottom:24px; flex-wrap:wrap; justify-content:center;">
+        <button class="btn btn-secondary" onclick="showPage('editor')">← Back to Editor</button>
+        <button class="btn btn-primary" onclick="downloadPDF()">⬇ Download PDF</button>
+        <button class="btn btn-secondary" onclick="saveResume()">💾 Save Resume</button>
+      </div>
+      <div class="resume-paper" id="resume-paper-full"></div>
+    </div>
+  </section>
+
+  <!-- ══════════ PAGE: My Resumes ══════════ -->
+  <section id="page-resumes" class="page">
+    <div class="app-page" style="padding:100px 24px 48px;">
+      <div class="container">
+        <h2 class="section-title">My Resumes</h2>
+        <p class="section-subtitle">Your saved resumes — click to load and edit</p>
+        <div id="resumes-list"
+          style="display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:16px;">
+          <div class="empty-state" id="resumes-empty">
+            <div class="icon">📂</div>
+            <p>No saved resumes yet. Create one from the Editor!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ PAGE: ATS Analysis ══════════ -->
+  <section id="page-ats" class="page">
+    <div class="ats-page">
+      <div class="container">
+
+        <!-- Header -->
+        <div class="ats-header">
+          <div class="ats-header-badge">⚡ Smart Resume Analysis</div>
+          <h2 class="section-title">ATS Resume Checker</h2>
+          <p class="section-subtitle">Upload your resume and paste a job description to instantly see your
+            match score and exactly what's missing. Supports <strong>PDF, DOCX, DOC, TXT, RTF, ODT, HTML</strong>.</p>
+        </div>
+
+        <!-- Step indicators -->
+        <div class="ats-steps">
+          <div class="ats-step active" id="ats-step-1">
+            <div class="ats-step-num">1</div>
+            <span>Upload Resume</span>
+          </div>
+          <div class="ats-step-divider"></div>
+          <div class="ats-step" id="ats-step-2">
+            <div class="ats-step-num">2</div>
+            <span>Paste Job Description</span>
+          </div>
+          <div class="ats-step-divider"></div>
+          <div class="ats-step" id="ats-step-3">
+            <div class="ats-step-num">3</div>
+            <span>View Results</span>
+          </div>
+        </div>
+
+        <!-- Input Area -->
+        <div class="ats-input-grid">
+
+          <!-- Resume Upload -->
+          <div class="ats-input-card">
+            <div class="ats-input-header">
+              <span class="ats-input-icon">📄</span>
+              <div>
+                <h3>Your Resume</h3>
+                <p>PDF, DOCX, TXT, RTF, ODT, HTML — up to 10MB</p>
+              </div>
+            </div>
+
+            <!-- Drop Zone -->
+            <div class="ats-drop-zone" id="ats-drop-zone" onclick="document.getElementById('ats-file-input').click()"
+              ondragover="atsDragOver(event)" ondragleave="atsDragLeave(event)" ondrop="atsDrop(event)">
+              <input type="file" id="ats-file-input" accept=".pdf,.docx,.doc,.txt,.rtf,.odt,.html,.htm"
+                style="display:none" onchange="atsFileSelected(event)" />
+              <div class="ats-drop-idle" id="ats-drop-idle">
+                <div class="ats-drop-icon">📂</div>
+                <p class="ats-drop-label">Drop your resume here or <span>click to browse</span></p>
+                <p class="ats-drop-hint">Supports PDF, DOCX, DOC, TXT, RTF, ODT, HTML</p>
+              </div>
+              <div class="ats-drop-ready" id="ats-drop-ready" style="display:none">
+                <div class="ats-file-info">
+                  <span class="ats-file-icon" id="ats-file-icon">📄</span>
+                  <div>
+                    <div class="ats-file-name" id="ats-file-name">resume.pdf</div>
+                    <div class="ats-file-size" id="ats-file-size">0 KB</div>
+                  </div>
+                  <button class="ats-file-remove" onclick="atsRemoveFile(event)" title="Remove">✕</button>
+                </div>
+                <div class="ats-parse-status" id="ats-parse-status">
+                  <span class="ats-parse-spinner" id="ats-parse-spinner">⏳ Parsing file...</span>
+                  <span class="ats-parse-ok" id="ats-parse-ok" style="display:none">✅ Ready to analyze</span>
+                  <span class="ats-parse-err" id="ats-parse-err" style="display:none">❌ Parse error</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Extracted text preview (collapsible) -->
+            <details class="ats-preview-details" id="ats-preview-details" style="display:none">
+              <summary>Preview extracted text</summary>
+              <pre class="ats-preview-text" id="ats-preview-text"></pre>
+            </details>
+          </div>
+
+          <!-- Job Description -->
+          <div class="ats-input-card">
+            <div class="ats-input-header">
+              <span class="ats-input-icon">💼</span>
+              <div>
+                <h3>Job Description</h3>
+                <p>Paste the full job posting below</p>
+              </div>
+            </div>
+            <textarea id="ats-jd-text" class="ats-textarea"
+              placeholder="Paste the job description here...
+Example:
+We are looking for a Senior Software Engineer with experience in React, TypeScript, Node.js, REST APIs, Docker, Kubernetes..." oninput="atsCheckReady()"></textarea>
+          </div>
+        </div>
+
+        <!-- Analyze Button -->
+        <div class="ats-analyze-wrap">
+          <button class="btn btn-primary ats-analyze-btn" id="ats-analyze-btn" onclick="runATSAnalysis()" disabled>
+            <span>⚡</span> Analyze Match
+          </button>
+          <p class="ats-analyze-hint" id="ats-analyze-hint">Upload a resume and paste a job description to continue</p>
+        </div>
+        <!-- Results -->
+        <div class="ats-results" id="ats-results" style="display:none;">
+
+          <!-- ── Score Overview ── -->
+          <div class="ats-score-section">
+            <div class="ats-ring-wrap">
+              <svg class="ats-ring-svg" viewBox="0 0 120 120">
+                <defs>
+                  <linearGradient id="atsGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#6366f1" />
+                    <stop offset="100%" stop-color="#8b5cf6" />
+                  </linearGradient>
+                </defs>
+                <circle class="ats-ring-bg" cx="60" cy="60" r="50" />
+                <circle class="ats-ring-fill" id="ats-ring-fill" cx="60" cy="60" r="50" stroke-dasharray="314.16"
+                  stroke-dashoffset="314.16" transform="rotate(-90 60 60)" />
+              </svg>
+              <div class="ats-ring-label">
+                <div class="ats-score-num" id="ats-score-num">0%</div>
+                <div class="ats-score-grade" id="ats-score-grade">—</div>
+              </div>
+            </div>
+            <div class="ats-score-meta">
+              <div class="ats-stat-pills" id="ats-stat-pills"></div>
+              <div class="ats-score-desc" id="ats-score-desc"></div>
+            </div>
+          </div>
+
+          <!-- ── Score Breakdown (4 categories) ── -->
+          <div class="ats-breakdown-card" id="ats-breakdown-card">
+            <div class="ats-breakdown-header">
+              <span>📊</span>
+              <h4>Score Breakdown</h4>
+            </div>
+            <div class="ats-breakdown-bars" id="ats-breakdown-bars">
+              <!-- populated by JS -->
+            </div>
+          </div>
+
+          <!-- ── Priority Actions ── -->
+          <div class="ats-priority-card" id="ats-priority-card">
+            <div class="ats-priority-header">
+              <span>🚨</span>
+              <h4>Top Priority Actions</h4>
+              <span class="ats-priority-badge" id="ats-priority-badge">0 issues</span>
+            </div>
+            <div class="ats-priority-list" id="ats-priority-list">
+              <!-- populated by JS -->
+            </div>
+          </div>
+
+          <!-- ── Formatting Issues ── -->
+          <div class="ats-format-card" id="ats-format-card">
+            <div class="ats-format-header">
+              <span>🔍</span>
+              <h4>Formatting Analysis</h4>
+              <span class="ats-format-badge" id="ats-format-badge">0 issues</span>
+            </div>
+            <div class="ats-format-list" id="ats-format-list">
+              <!-- populated by JS -->
+            </div>
+          </div>
+
+          <!-- ── Section Health ── -->
+          <div class="ats-section-card" id="ats-section-card">
+            <div class="ats-section-header">
+              <span>📋</span>
+              <h4>Resume Section Health</h4>
+            </div>
+            <div class="ats-section-grid" id="ats-section-grid">
+              <!-- populated by JS -->
+            </div>
+          </div>
+
+          <!-- ── Keywords ── -->
+          <div class="ats-kw-grid">
+            <div class="ats-kw-card matched">
+              <div class="ats-kw-header">
+                <span>✅</span>
+                <h4>Matched Keywords</h4>
+                <span class="ats-kw-count" id="ats-matched-count">0</span>
+              </div>
+              <div class="ats-chips" id="ats-matched-chips"></div>
+            </div>
+            <div class="ats-kw-card missing">
+              <div class="ats-kw-header">
+                <span>❌</span>
+                <h4>Missing Keywords</h4>
+                <span class="ats-kw-count" id="ats-missing-count">0</span>
+              </div>
+              <div class="ats-chips" id="ats-missing-chips"></div>
+            </div>
+          </div>
+
+          <!-- ── Tips ── -->
+          <div class="ats-tips-card" id="ats-tips-card">
+            <div class="ats-tips-header">
+              <span>💡</span>
+              <h4>How to Improve Your Score</h4>
+            </div>
+            <ul class="ats-tips-list" id="ats-tips-list"></ul>
+          </div>
+
+          <!-- Re-analyze -->
+          <div style="text-align:center; margin-top:24px;">
+            <button class="btn btn-secondary" onclick="atsReset()">🔄 Analyze Another Resume</button>
+          </div>
+
+        </div><!-- /ats-results -->
+      </div>
+    </div>
+  </section>
+  <script src="script.js"></script>
+
+  <!-- ══════════ Smart Suggestions Panel ══════════ -->
+  <div id="ss-panel" class="ss-panel" role="dialog" aria-modal="true" aria-labelledby="ss-header-title">
+    <div class="ss-overlay" onclick="closeSmartSuggest()"></div>
+    <div class="ss-drawer">
+      <div class="ss-header">
+        <span id="ss-header-title" class="ss-header-title">✨ Smart Suggestions</span>
+        <button class="ss-close-btn" onclick="closeSmartSuggest()" title="Close">✕</button>
+      </div>
+      <div class="ss-subheader">Better wording · Strong action verbs · Industry phrases</div>
+      <div class="ss-body" id="ss-body">
+        <!-- populated by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ Chatbot Widget ══════════ -->
+  <!-- Toggle Button -->
+  <button class="chatbot-toggle" id="chatbot-toggle" onclick="toggleChatbot()" title="Chat with Resume Assistant" aria-label="Open chatbot">
+    <span class="chatbot-toggle-icon" id="chatbot-toggle-icon">💬</span>
+    <span class="chatbot-notif-dot" id="chatbot-notif-dot"></span>
+  </button>
+
+  <!-- Chat Window -->
+  <div class="chatbot-window" id="chatbot-window" aria-hidden="true">
+    <!-- Header -->
+    <div class="chatbot-header">
+      <div class="chatbot-header-info">
+        <div class="chatbot-avatar">🤖</div>
+        <div>
+          <div class="chatbot-name">Resume Assistant</div>
+          <div class="chatbot-status"><span class="chatbot-status-dot"></span> Online</div>
+        </div>
+      </div>
+      <div class="chatbot-header-actions">
+        <button class="chatbot-clear-btn" onclick="clearChatHistory()" title="Clear chat">🗑️</button>
+        <button class="chatbot-close-btn" onclick="toggleChatbot()" title="Close">✕</button>
+      </div>
+    </div>
+
+    <!-- Messages Area -->
+    <div class="chatbot-messages" id="chatbot-messages">
+      <!-- populated by JS -->
+    </div>
+
+    <!-- Quick Suggestions -->
+    <div class="chatbot-suggestions" id="chatbot-suggestions">
+      <button class="chatbot-suggest-chip" onclick="sendSuggestedMessage('Help me write a summary')">✍️ Write summary</button>
+      <button class="chatbot-suggest-chip" onclick="sendSuggestedMessage('Best template for tech jobs?')">🎨 Best template</button>
+      <button class="chatbot-suggest-chip" onclick="sendSuggestedMessage('How to improve ATS score?')">⚡ ATS tips</button>
+      <button class="chatbot-suggest-chip" onclick="sendSuggestedMessage('What skills should I add?')">🛠️ Skill advice</button>
+    </div>
+
+    <!-- Input Area -->
+    <div class="chatbot-input-area">
+      <input
+        type="text"
+        id="chatbot-input"
+        class="chatbot-input"
+        placeholder="Ask about resumes, templates, ATS…"
+        maxlength="500"
+        onkeydown="chatbotKeyDown(event)"
+        aria-label="Chat message"
+        autocomplete="off"
+      />
+      <button class="chatbot-send-btn" id="chatbot-send-btn" onclick="sendChatMessage()" title="Send">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="22" y1="2" x2="11" y2="13"></line>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+</body>
+
+</html>
